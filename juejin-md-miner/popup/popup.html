@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章信息</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div id="article-info">
+        <h1>文章基本信息</h1>
+        <div class="wrapper">
+            <p>文章标题：</p>
+            <p id="article-title"></p>
+        </div>
+        <div class="wrapper">
+            <p>文章作者：</p>
+            <p id="article-author"></p>
+        </div>
+        <div class="wrapper">
+            <p>发布日期：</p>
+            <p id="article-date"></p>
+        </div>
+    </div>
+    <button id="download-btn">
+        <span class="button-text">下载Markdown</span>
+        <span class="loading-dots"></span>
+    </button>
+    <script src="popup.js"></script>
+</body>
+</html>

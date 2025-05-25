@@ -1,0 +1,71 @@
+body {
+    width: 350px;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+#article-info {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+#article-info h1 {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#article-info p {
+    font-size: 0.9em;
+    color: #666;
+    margin: 5px 0;
+}
+
+.wrapper{
+    display: flex;
+}
+
+#download-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#download-btn:hover {
+    background-color: #1a73d2;
+}
+
+#download-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.loading-dots {
+    display: none;
+}
+
+#download-btn:disabled .loading-dots {
+    display: inline-block;
+    width: 15px;
+    text-align: left;
+}
+
+.loading-dots::after {
+    content: "....";
+    animation: dots 1s steps(5, end) infinite;
+}
+
+@keyframes dots {
+    0%, 20% { content: "."; }
+    40% { content: ".."; }
+    60% { content: "..."; }
+    80%, 100% { content: "...."; }
+}
