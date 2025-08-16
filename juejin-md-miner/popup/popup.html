@@ -3,11 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文章信息</title>
+    <title>多平台Markdown下载器</title>
     <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-    <div id="article-info">
+    <!-- 网站选择界面 -->
+    <div class="section site-options" id="site-selection">
+        <h1>选择网站平台</h1>
+        <button class="site-btn" data-site="juejin">稀土掘金</button>
+        <button class="site-btn" data-site="zhihu">知乎</button>
+    </div>
+    
+    <!-- 文章信息界面 -->
+    <div class="section" id="article-info" style="display: none;">
         <h1>文章基本信息</h1>
         <div class="wrapper">
             <p>文章标题：</p>
@@ -21,11 +29,21 @@
             <p>发布日期：</p>
             <p id="article-date"></p>
         </div>
+        
+        <!-- 下载选项 -->
+        <div class="download-options">
+            <button class="download-btn" id="download-md-btn">
+                <span class="button-text">下载Markdown</span>
+                <span class="loading-dots"></span>
+            </button>
+            <button class="download-btn" id="download-md-img-btn">
+                <span class="button-text">下载Markdown和图片</span>
+                <span class="loading-dots"></span>
+            </button>
+            <button class="back-btn" id="back-btn">返回选择</button>
+        </div>
     </div>
-    <button id="download-btn">
-        <span class="button-text">下载Markdown</span>
-        <span class="loading-dots"></span>
-    </button>
+    
     <script src="popup.js"></script>
 </body>
 </html>

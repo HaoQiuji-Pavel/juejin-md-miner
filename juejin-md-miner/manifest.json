@@ -2,8 +2,8 @@
     "manifest_version": 3,
     "name": "稀土掘金Markdown下载器",
     "version": "1.0",
-    "description": "将网页版稀土掘金的文章转为Markdown格式文件并支持下载",
-    "permissions": ["activeTab"],
+    "description": "将网页版稀土掘金的文章转为Markdown格式文件并支持下载，支持图片下载",
+    "permissions": ["activeTab", "downloads"],
     "action": {
         "default_popup": "popup/popup.html"
     },
@@ -11,7 +11,8 @@
         "matches": ["https://juejin.cn/post/*"],
         "js": [
             "scripts/turndown.js",
-            "scripts/content.js"
+            "scripts/content.js",
+            "scripts/jszip.js"
         ]
     }]
 }
