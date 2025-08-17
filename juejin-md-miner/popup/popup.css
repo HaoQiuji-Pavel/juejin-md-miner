@@ -30,14 +30,8 @@ body {
 }
 
 /* 网站选择按钮样式 */
-.site-options {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .site-btn {
-    width: 80%;
+    width: 100%;
     padding: 12px;
     margin: 8px 0;
     background-color: #007bff;

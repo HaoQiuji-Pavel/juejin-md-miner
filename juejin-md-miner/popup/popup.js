@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', async (e) => {
             currentSite = e.target.dataset.site;
             document.getElementById('site-selection').style.display = 'none';
+            document.getElementById('article-info').style.display = 'block';
             await loadArticleInfo(currentSite);
         });
     });
@@ -40,7 +41,6 @@ async function loadArticleInfo(site) {
         const titleElement = document.getElementById('article-title');
         const authorElement = document.getElementById('article-author');
         const dateElement = document.getElementById('article-date');
-        const articleInfoDiv = document.getElementById('article-info');
 
         if (response && response.success) {
             const {processedTitle, processedAuthor, processedDate} = getProcessedInfo(response.articleBasicInfo);
@@ -48,17 +48,16 @@ async function loadArticleInfo(site) {
             titleElement.textContent = processedTitle;
             authorElement.textContent = processedAuthor;
             dateElement.textContent = processedDate;
-            articleInfoDiv.style.display = 'block';
         } else {
             titleElement.textContent = `未获取到${getSiteName(site)}文章信息`;
             authorElement.textContent = '';
             dateElement.textContent = '';
-            articleInfoDiv.style.display = 'block';
             alert(`无法获取${getSiteName(site)}文章信息，请确保您正在浏览${getSiteName(site)}的文章页面。`);
         }
     } catch (error) {
         alert(`无法连接到当前页面，请确保您正在浏览${getSiteName(site)}的文章页面。`);
         document.getElementById('site-selection').style.display = 'block';
+        document.getElementById('article-info').style.display = 'none';
     }
 }
 
