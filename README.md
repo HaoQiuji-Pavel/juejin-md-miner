@@ -1,8 +1,14 @@
 # JuejinMdMiner
 
-这是一个chrome浏览器插件，用于将网页版稀土掘金的文章转换为markdown格式，并提供下载到本地的功能。
+这是一个chrome浏览器插件，用于将网页版稀土掘金的文章转换为markdown格式，并提供下载到本地的功能。下载功能分为两种：
 
-本插件开发使用了turndown，一个将html转换为markdown的库。
+- 下载markdown文件，仅包含文章内容。
+- 下载markdown文件和图片，包含文章内容和图片。
+
+本插件开发使用了以下库：
+
+- turndown，一个将html转换为markdown的库。
+- jszip，一个生成zip压缩包的库。
 
 ## 使用方法
 
