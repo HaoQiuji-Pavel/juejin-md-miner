@@ -37,7 +37,7 @@ async function loadArticleInfo(site) {
             action: 'getArticleInfo',
             site: site
         });
-
+        
         const titleElement = document.getElementById('article-title');
         const authorElement = document.getElementById('article-author');
         const dateElement = document.getElementById('article-date');
@@ -65,7 +65,7 @@ async function loadArticleInfo(site) {
 function getSiteName(site) {
     const siteNames = {
         'juejin': '稀土掘金',
-        'zhihu': '知乎'
+        'zhihu': '知乎专栏'
     };
     return siteNames[site] || site;
 }

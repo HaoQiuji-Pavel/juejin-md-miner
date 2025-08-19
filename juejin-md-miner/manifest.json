@@ -8,7 +8,10 @@
         "default_popup": "popup/popup.html"
     },
     "content_scripts": [{
-        "matches": ["https://juejin.cn/post/*"],
+        "matches": [
+            "https://juejin.cn/post/*", 
+            "https://zhuanlan.zhihu.com/p/*"
+        ],
         "js": [
             "scripts/turndown.js",
             "scripts/content.js",

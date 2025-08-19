@@ -5,7 +5,7 @@ const siteAdapters = {
     getArticleInfo: getJuejinArticleInfo,
     convertToMarkdown: convertJuejinToMarkdown
   },
-  // 知乎适配器
+  // 知乎专栏适配器
   zhihu: {
     getArticleInfo: getZhihuArticleInfo,
     convertToMarkdown: convertZhihuToMarkdown
@@ -142,37 +142,22 @@ function convertJuejinToMarkdown() {
   return { title, markdown };
 }
 
-// 知乎网站文章信息获取
+// 知乎专栏网站文章信息获取
 function getZhihuArticleInfo() {
-  // 判断是问答还是专栏
-  const isQuestion = window.location.href.includes('/question/');
+  // 知乎专栏页面
+  const articleInfo = document.querySelector('article');
+  const title = articleInfo.querySelector('.Post-Title')?.textContent;
+  const author = articleInfo.querySelector('.AuthorInfo meta[itemprop="name"]')?.content;
+  const date = articleInfo.querySelector('.ContentItem-time')?.textContent || '';
   
-  if (isQuestion) {
-    // 知乎问答页面
-    const title = document.querySelector('.QuestionHeader-title')?.textContent;
-    const author = document.querySelector('.AnswerItem .AuthorInfo-name')?.textContent || '匿名用户';
-    const date = document.querySelector('.AnswerItem .ContentItem-time')?.textContent || '';
-    
-    if (!title) {
-      throw new Error('未找到知乎问答信息');
-    }
-    
-    return {title, author, date};
-  } else {
-    // 知乎专栏页面
-    const title = document.querySelector('.Post-Title')?.textContent;
-    const author = document.querySelector('.AuthorInfo-name')?.textContent;
-    const date = document.querySelector('.ContentItem-time')?.textContent || '';
-    
-    if (!title || !author) {
-      throw new Error('未找到知乎专栏信息');
-    }
-    
-    return {title, author, date};
+  if (!title || !author) {
+    throw new Error('未找到知乎专栏信息');
   }
+  
+  return {title, author, date};
 }
 
-// 知乎网站文章转Markdown
+// 知乎专栏网站文章转Markdown
 function convertZhihuToMarkdown() {
   const isQuestion = window.location.href.includes('/question/');
   let title, articleContent;
@@ -181,7 +166,7 @@ function convertZhihuToMarkdown() {
   turndownService.remove('style');
   turndownService.remove('noscript');
   
-  // 添加知乎代码块规则
+  // 添加知乎专栏代码块规则
   turndownService.addRule('zhihuCodeBlock', {
     filter: (node) => {
       return node.nodeName === 'PRE' && node.querySelector('code');
@@ -193,7 +178,7 @@ function convertZhihuToMarkdown() {
     }
   });
   
-  // 添加知乎表格规则
+  // 添加知乎专栏表格规则
   turndownService.addRule('zhihuTable', {
     filter: 'table',
     replacement: function (content, node) {
@@ -217,23 +202,12 @@ function convertZhihuToMarkdown() {
     }
   });
   
-  if (isQuestion) {
-    // 知乎问答页面
-    title = document.querySelector('.QuestionHeader-title')?.textContent;
-    const answerContent = document.querySelector('.AnswerItem .RichContent-inner');
-    if (!title || !answerContent) {
-      throw new Error('未找到知乎问答内容');
-    }
-    articleContent = answerContent.innerHTML;
-  } else {
-    // 知乎专栏页面
-    title = document.querySelector('.Post-Title')?.textContent;
-    const postContent = document.querySelector('.Post-RichContent');
-    if (!title || !postContent) {
-      throw new Error('未找到知乎专栏内容');
-    }
-    articleContent = postContent.innerHTML;
+  title = document.querySelector('.Post-Title')?.textContent;
+  const postContent = document.querySelector('.Post-RichContent');
+  if (!title || !postContent) {
+    throw new Error('未找到知乎专栏内容');
   }
+  articleContent = postContent.innerHTML;
   
   title = title.replace(/^\s+|\s+$/g, '').replace(/^\n+|\n+$/g, '');
   const markdown = turndownService.turndown(articleContent);
