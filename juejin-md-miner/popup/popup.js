@@ -53,6 +53,8 @@ async function loadArticleInfo(site) {
             authorElement.textContent = '';
             dateElement.textContent = '';
             alert(`无法获取${getSiteName(site)}文章信息，请确保您正在浏览${getSiteName(site)}的文章页面。`);
+            document.getElementById('site-selection').style.display = 'block';
+            document.getElementById('article-info').style.display = 'none';
         }
     } catch (error) {
         alert(`无法连接到当前页面，请确保您正在浏览${getSiteName(site)}的文章页面。`);
