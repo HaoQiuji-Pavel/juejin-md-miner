@@ -159,58 +159,16 @@ function getZhihuArticleInfo() {
 
 // 知乎专栏网站文章转Markdown
 function convertZhihuToMarkdown() {
-  const isQuestion = window.location.href.includes('/question/');
-  let title, articleContent;
-  
-  const turndownService = new TurndownService();
-  turndownService.remove('style');
-  turndownService.remove('noscript');
-  
-  // 添加知乎专栏代码块规则
-  turndownService.addRule('zhihuCodeBlock', {
-    filter: (node) => {
-      return node.nodeName === 'PRE' && node.querySelector('code');
-    },
-    replacement: (content, node) => {
-      const codeContent = node.querySelector('code').textContent;
-      const fence = '```';
-      return `\n\n${fence}\n${codeContent}${fence}\n\n`;
-    }
-  });
-  
-  // 添加知乎专栏表格规则
-  turndownService.addRule('zhihuTable', {
-    filter: 'table',
-    replacement: function (content, node) {
-      const headers = Array.from(node.querySelectorAll('th'))
-        .map(th => turndownService.turndown(th.innerHTML))
-        .join(' | ');
+  const element = document.querySelector('article');
 
-      const separator = Array.from(node.querySelectorAll('th'))
-        .map(() => '---')
-        .join(' | ');
-
-      const rows = Array.from(node.querySelectorAll('tbody tr'))
-        .map(tr => {
-          return Array.from(tr.querySelectorAll('td'))
-            .map(td => turndownService.turndown(td.innerHTML))
-            .join(' | ');
-        })
-        .join('\n');
-
-      return `\n\n${headers}\n${separator}\n${rows}\n\n`;
-    }
-  });
-  
-  title = document.querySelector('.Post-Title')?.textContent;
-  const postContent = document.querySelector('.Post-RichContent');
-  if (!title || !postContent) {
-    throw new Error('未找到知乎专栏内容');
+  if (!element) {
+    throw new Error('未找到知乎专栏文章内容');
   }
-  articleContent = postContent.innerHTML;
+  const turndownService = new TurndownService();
+  const title = element.querySelector('.Post-Header h1').textContent.replace(/^\s+|\s+$/g, '').replace(/^\n+|\n+$/g, '');
+  const articleContent = element.querySelector('.Post-RichTextContainer #content .Post-RichText').innerHTML;
   
-  title = title.replace(/^\s+|\s+$/g, '').replace(/^\n+|\n+$/g, '');
-  const markdown = turndownService.turndown(articleContent);
+  const markdown = turndownService.turndown(articleContent)
   return { title, markdown };
 }
 
