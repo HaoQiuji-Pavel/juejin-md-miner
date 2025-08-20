@@ -9,6 +9,11 @@ const siteAdapters = {
   zhihu: {
     getArticleInfo: getZhihuArticleInfo,
     convertToMarkdown: convertZhihuToMarkdown
+  },
+  // 其他网站适配器
+  other: {
+    getArticleInfo: getOtherArticleInfo,
+    convertToMarkdown: convertOtherToMarkdown
   }
 };
 
@@ -146,6 +151,9 @@ function convertJuejinToMarkdown() {
 function getZhihuArticleInfo() {
   // 知乎专栏页面
   const articleInfo = document.querySelector('article');
+  if (!articleInfo) {
+    throw new Error('未找到知乎专栏文章信息');
+  }
   const title = articleInfo.querySelector('.Post-Title')?.textContent;
   const author = articleInfo.querySelector('.AuthorInfo meta[itemprop="name"]')?.content;
   const date = articleInfo.querySelector('.ContentItem-time')?.textContent || '';
@@ -167,6 +175,35 @@ function convertZhihuToMarkdown() {
   const turndownService = new TurndownService();
   const title = element.querySelector('.Post-Header h1').textContent.replace(/^\s+|\s+$/g, '').replace(/^\n+|\n+$/g, '');
   const articleContent = element.querySelector('.Post-RichTextContainer #content .Post-RichText').innerHTML;
+  
+  const markdown = turndownService.turndown(articleContent)
+  return { title, markdown };
+}
+
+// 其他网站文章信息获取
+function getOtherArticleInfo() {
+  // 其他网站页面
+  const articleInfo = document.querySelector('article');
+  if (!articleInfo) {
+    throw new Error('未找到其他网站文章信息');
+  }
+  const title = document.querySelector('h1')?.textContent || '其他网站文章标题';
+  const author = '其他网站文章作者';
+  const date = '其他网站文章日期';
+  
+  return {title, author, date};
+}
+
+// 其他网站文章转Markdown
+function convertOtherToMarkdown() {
+  const element = document.querySelector('article');
+  if (!element) {
+    throw new Error('未找到其他网站文章内容');
+  }
+  
+  const turndownService = new TurndownService();
+  const title = document.querySelector('h1')?.textContent || '其他网站文章标题';
+  const articleContent = element.innerHTML;
   
   const markdown = turndownService.turndown(articleContent)
   return { title, markdown };

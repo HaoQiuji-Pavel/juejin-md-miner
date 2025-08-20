@@ -11,7 +11,7 @@
         "matches": [
             "https://juejin.cn/post/*", 
             "https://zhuanlan.zhihu.com/p/*",
-            "*"
+            "<all_urls>"
         ],
         "js": [
             "scripts/turndown.js",

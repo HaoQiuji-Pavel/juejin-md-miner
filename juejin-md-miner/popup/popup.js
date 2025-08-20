@@ -65,7 +65,8 @@ async function loadArticleInfo(site) {
 function getSiteName(site) {
     const siteNames = {
         'juejin': '稀土掘金',
-        'zhihu': '知乎专栏'
+        'zhihu': '知乎专栏',
+        'other': '其他网站'
     };
     return siteNames[site] || site;
 }
