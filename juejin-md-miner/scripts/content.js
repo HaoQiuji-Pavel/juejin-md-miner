@@ -205,8 +205,37 @@ function convertOtherToMarkdown() {
   const title = document.querySelector('h1')?.textContent || '其他网站文章标题';
   const articleContent = element.innerHTML;
   
-  const markdown = turndownService.turndown(articleContent)
+  let markdown = turndownService.turndown(articleContent);
+  
+  // 处理markdown中的相对路径图片，将其转换为绝对路径
+  const imgRegex = /!\[([^\]]*)\]\(([^\)]+)\)/g;
+  markdown = markdown.replace(imgRegex, (match, alt, url) => {
+    const absoluteUrl = convertToAbsoluteUrl(url);
+    return `![${alt}](${absoluteUrl})`;
+  });
+  
   return { title, markdown };
+}
+
+// 将相对路径转换为绝对路径
+function convertToAbsoluteUrl(url) {
+  // 如果已经是绝对路径，直接返回
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    return url;
+  }
+  
+  // 如果是相对路径，添加当前网站的域名
+  const currentOrigin = window.location.origin;
+  
+  // 处理以 / 开头的绝对路径
+  if (url.startsWith('/')) {
+    return currentOrigin + url;
+  }
+  
+  // 处理相对路径（不以 / 开头）
+  const currentPath = window.location.pathname;
+  const basePath = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+  return currentOrigin + basePath + url;
 }
 
 // 获取图片扩展名
@@ -295,7 +324,12 @@ async function downloadMarkdownWithImages(title, markdown, callback) {
 
 // 获取图片Blob
 function fetchImage(url) {
-  return fetch(url)
+  return fetch(url, {
+    headers: {
+      'Referer': window.location.href,
+      'User-Agent': navigator.userAgent
+    }
+  })
     .then(response => {
       if (!response.ok) {
         throw new Error(`获取图片失败: ${response.statusText}`);
