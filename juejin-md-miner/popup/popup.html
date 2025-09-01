@@ -8,11 +8,25 @@
 </head>
 <body>
     <!-- 网站选择界面 -->
-    <div class="section site-options" id="site-selection">
+    <!-- <div class="section site-options" id="site-selection">
         <h1>选择网站平台</h1>
         <button class="site-btn" data-site="juejin">稀土掘金</button>
         <button class="site-btn" data-site="zhihu">知乎专栏</button>
         <button class="site-btn" data-site="other">其他网站</button>
+    </div> -->
+    <div class="section site-options" id="site-selection">
+        <div class="top" style="text-align: center;">
+            <h1>掘金 MarkDown 下载器</h1>
+            <p>选择要下载文章的网站</p>
+        </div>
+        <div class="site-list" >
+            <site-option name="稀土掘金" url="https://juejin.cn/post/" support="true" site="juejin"></site-option>
+            <site-option name="知乎专栏" url="https://zhuanlan.zhihu.com/p/" support="true" site="zhihu"></site-option>
+            <site-option name="其他网站" url="balabalabala~" support="false" site="other"></site-option>
+        </div>
+        <div class="bottom" style="text-align: center;">
+            <p>更多网站适配正在开发中...</p>
+        </div>
     </div>
     
     <!-- 文章信息界面 -->
@@ -30,6 +44,7 @@
             <p>发布日期：</p>
             <p id="article-date"></p>
         </div>
+       
         
         <!-- 下载选项 -->
         <div class="download-options">
@@ -45,6 +60,7 @@
         </div>
     </div>
     
+    <script src="component.js"></script>
     <script src="popup.js"></script>
 </body>
 </html>

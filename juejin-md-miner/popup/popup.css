@@ -1,50 +1,17 @@
 body {
-    width: 400px;
-    padding: 20px;
-    background-color: #f5f5f5;
-}
-
-.section {
-    background-color: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    width: 250px;
+    padding: 10px;
+    background-color: #FEF7F7;
 }
 
 .section h1 {
     font-size: 1.2em;
-    color: #333;
-    margin-bottom: 15px;
-    text-align: center;
+    color: #4A1A1A;
 }
 
 .section p {
     font-size: 0.9em;
-    color: #666;
-    margin: 5px 0;
-}
-
-.wrapper{
-    display: flex;
-}
-
-/* 网站选择按钮样式 */
-.site-btn {
-    width: 100%;
-    padding: 12px;
-    margin: 8px 0;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 1em;
-}
-
-.site-btn:hover {
-    background-color: #1a73d2;
+    color: #8E5572;
 }
 
 /* 下载按钮样式 */
