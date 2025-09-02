@@ -93,7 +93,7 @@ class SiteOption extends HTMLElement {
   
   addEventListeners() {
     const button = this.shadowRoot.querySelector('.site-option');
-    const support = this.getAttribute('support') === 'true';
+    const support = (this.getAttribute('support') === 'true' || this.getAttribute('support') === true);
     
     if (support) {
       button.addEventListener('click', () => {

@@ -2,14 +2,12 @@
 let currentSite = '';
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 网站选择按钮事件监听
-    document.querySelectorAll('.site-btn').forEach(button => {
-        button.addEventListener('click', async (e) => {
-            currentSite = e.target.dataset.site;
-            document.getElementById('site-selection').style.display = 'none';
-            document.getElementById('article-info').style.display = 'block';
-            await loadArticleInfo(currentSite);
-        });
+    // 监听自定义元素site-option的site-selected事件
+    document.addEventListener('site-selected', async (e) => {
+        currentSite = e.detail.site;
+        document.getElementById('site-selection').style.display = 'none';
+        document.getElementById('article-info').style.display = 'block';
+        await loadArticleInfo(currentSite);
     });
 
     // 返回按钮事件监听
@@ -32,15 +30,19 @@ document.addEventListener('DOMContentLoaded', () => {
 // 加载文章信息
 async function loadArticleInfo(site) {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true });
+    
     try {
         const response = await chrome.tabs.sendMessage(tab.id, { 
             action: 'getArticleInfo',
             site: site
-        });
+        }); 
         
         const titleElement = document.getElementById('article-title');
         const authorElement = document.getElementById('article-author');
         const dateElement = document.getElementById('article-date');
+
+        const siteNameElement = document.querySelector('.selected-site .site-name');
+        const siteUrlElement = document.querySelector('.selected-site .site-url');
 
         if (response && response.success) {
             const {processedTitle, processedAuthor, processedDate} = getProcessedInfo(response.articleBasicInfo);
@@ -48,6 +50,9 @@ async function loadArticleInfo(site) {
             titleElement.textContent = processedTitle;
             authorElement.textContent = processedAuthor;
             dateElement.textContent = processedDate;
+
+            siteNameElement.textContent = getSiteName(site);
+            siteUrlElement.textContent = getSiteUrl(site);
         } else {
             titleElement.textContent = `未获取到${getSiteName(site)}文章信息`;
             authorElement.textContent = '';
@@ -56,7 +61,7 @@ async function loadArticleInfo(site) {
             document.getElementById('site-selection').style.display = 'block';
             document.getElementById('article-info').style.display = 'none';
         }
-    } catch (error) {
+    } catch (error) {    
         alert(`无法连接到当前页面，请确保您正在浏览${getSiteName(site)}的文章页面。`);
         document.getElementById('site-selection').style.display = 'block';
         document.getElementById('article-info').style.display = 'none';
@@ -71,6 +76,15 @@ function getSiteName(site) {
         'other': '其他网站'
     };
     return siteNames[site] || site;
+}
+// 获取网站url
+function getSiteUrl(site) {
+    const siteUrls = {
+        'juejin': 'https://juejin.cn/post/',
+        'zhihu': 'https://zhuanlan.zhihu.com/p/',
+        'other': 'balabalabala~'
+    };
+    return siteUrls[site] || site;
 }
 
 function getProcessedInfo(articleBasicInfo){

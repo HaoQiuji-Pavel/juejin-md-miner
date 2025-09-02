@@ -22,7 +22,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   // 获取当前网站的适配器
   const site = message.site || 'juejin'; // 默认使用掘金适配器
   const adapter = siteAdapters[site];
-  
   if (!adapter) {
     sendResponse({ success: false, error: '不支持的网站' });
     return false;
@@ -34,7 +33,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       if (!articleBasicInfo || !articleBasicInfo.title) {
         sendResponse({ success: false, error: '未找到文章信息' });
         return false;
-      }
+      }   
       sendResponse({ success: true, articleBasicInfo });
       return false;
     } catch (error) {

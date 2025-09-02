@@ -8,12 +8,6 @@
 </head>
 <body>
     <!-- 网站选择界面 -->
-    <!-- <div class="section site-options" id="site-selection">
-        <h1>选择网站平台</h1>
-        <button class="site-btn" data-site="juejin">稀土掘金</button>
-        <button class="site-btn" data-site="zhihu">知乎专栏</button>
-        <button class="site-btn" data-site="other">其他网站</button>
-    </div> -->
     <div class="section site-options" id="site-selection">
         <div class="top" style="text-align: center;">
             <h1>掘金 MarkDown 下载器</h1>
@@ -22,7 +16,7 @@
         <div class="site-list" >
             <site-option name="稀土掘金" url="https://juejin.cn/post/" support="true" site="juejin"></site-option>
             <site-option name="知乎专栏" url="https://zhuanlan.zhihu.com/p/" support="true" site="zhihu"></site-option>
-            <site-option name="其他网站" url="balabalabala~" support="false" site="other"></site-option>
+            <site-option name="其他网站" url="balabalabala~" support="true" site="other"></site-option>
         </div>
         <div class="bottom" style="text-align: center;">
             <p>更多网站适配正在开发中...</p>
@@ -31,32 +25,63 @@
     
     <!-- 文章信息界面 -->
     <div class="section" id="article-info" style="display: none;">
-        <h1>文章基本信息</h1>
-        <div class="wrapper">
-            <p>文章标题：</p>
-            <p id="article-title"></p>
+        <!-- 返回选择网站按钮 -->
+        <button class="back-btn" id="back-btn">
+            <img src="/icons/left.svg" style="width: 1.3em;height: 1.3em;">
+            <span>返回选择网站</span>
+        </button>
+
+        <!-- 选中的网站信息 -->
+       <div class="selected-site article-info-card">
+            <div class="site-info">
+                <div class="site-name"></div>
+                <div class="site-url"></div>
+            </div>
+            <div class="support-badge">
+                已连接
+            </div>
         </div>
-        <div class="wrapper">
-            <p>文章作者：</p>
-            <p id="article-author"></p>
-        </div>
-        <div class="wrapper">
-            <p>发布日期：</p>
-            <p id="article-date"></p>
-        </div>
-       
+
+        <!-- 文章信息 -->
+         <div class="article-basic-info article-info-card">
+            <div class="wrapper">
+                <img src="/icons/article_pink.svg" style="width: 1.3em;height: 1.3em;"/>
+                <div style="color: #4A1A1A;font-size: 0.9em;margin-left: 2px;">检测到的文章</div>
+            </div>
+            <div style="margin: 10px 0 30px 0;">
+                <p id="article-title" style="color: #4A1A1A;font-size: 0.8em;margin: 5px 0;"></p>
+            </div>
+            <div class="wrapper" style="margin:0 0 10px 0;">
+                <img src="/icons/author.svg" style="width: 1.1em;height: 1.1em;margin-right: 2px;"/>
+                <p style="color: #8E5572;font-size: 0.8em;">文章作者：</p>
+                <p id="article-author" style="color: #8E5572;font-size: 0.8em;"></p>
+            </div>
+            <div class="wrapper">
+                <img src="/icons/date.svg" style="width: 1.1em;height: 1.1em;margin-right: 2px;"/>
+                <p style="color: #8E5572;font-size: 0.8em;">发布时间：</p>
+                <p id="article-date" style="color: #8E5572;font-size: 0.8em;"></p>
+            </div>
+         </div>
         
         <!-- 下载选项 -->
-        <div class="download-options">
+        <div class="download-options article-info-card">
+            <div>
+                <img src="/icons/download.svg" style="width: 1.3em;height: 1.3em;transform: translateY(2px);"/>
+                <span style="color: #4A1A1A;font-size: 0.9em;margin-left: 2px;">下载选项</span>
+            </div>
             <button class="download-btn" id="download-md-btn">
-                <span class="button-text">下载Markdown</span>
+                <img src="/icons/article_white.svg" style="width: 1.1em;height: 1.1em;transform: translateY(2px);"/>
+                <span class="button-text" style="color: white;font-size: 0.8em;">仅下载Markdown文件</span>
                 <span class="loading-dots"></span>
             </button>
             <button class="download-btn" id="download-md-img-btn">
-                <span class="button-text">下载Markdown和图片</span>
+                <img src="/icons/photo.svg" style="width: 1.1em;height: 1.1em;transform: translateY(2px);"/>
+                <span class="button-text" style="color: #4A1A1A;font-size: 0.8em;">下载Markdown和图片</span>
                 <span class="loading-dots"></span>
             </button>
-            <button class="back-btn" id="back-btn">返回选择</button>
+            <p>
+                点击下载将自动处理文章内容并生成Markdown文件或者zip压缩包
+            </p>
         </div>
     </div>
     

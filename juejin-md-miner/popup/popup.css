@@ -14,48 +14,114 @@ body {
     color: #8E5572;
 }
 
-/* 下载按钮样式 */
-.download-options {
-    margin-top: 15px;
+/* 返回选择网站按钮 */
+.back-btn{
+    background-color: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9em;
+    width: 10em;
+    padding: 5px 0;
+    border: none;
+    transition: all 0.3s ease;
+    color: #8E5572;
+    text-align: left;
+}
+.back-btn:hover {
+    background-color: #f48fb1;
+}
+
+.article-info-card{
+    padding: 12px 16px;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(233, 30, 99, 0.2);
+    border-radius: 8px;
+}
+/* 选中的网站信息 */
+#article-info .selected-site {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.site-info {
+    width: 70%;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+}
+
+.site-name {
+    font-size: 0.9em;
+    margin-bottom: 2px;
+    color: #4A1A1A;
+}
+
+.site-url {
+    font-size: 0.8em;
+    opacity: 0.8;
+    color: #8E5572;
+}
+
+.support-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    background-color: #E91E63;
+    color: white;
+}
+/* 文章信息 */
+.article-basic-info{
+    margin-top: 12px;
+}
+.article-basic-info .wrapper{
+    display: flex;
+    align-items: center;
+}
+.article-basic-info .wrapper p{
+    margin: 0;
+}
+
+/* 下载选项样式 */
+.download-options{
+    background-color: rgba(252, 228, 236, 0.3);
+    margin-top: 10px;
+}
+.download-options p{
+    color: #8E5572;
+    text-align: center;
+    font-size: 10px;
 }
 
 .download-btn {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 8px;
-    background-color: #007bff;
-    color: white;
+    padding: 5px;
+    margin-top: 10px;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
-
-.download-btn:hover {
-    background-color: #1a73d2;
+#download-md-btn{
+    background-color: #E91E63;
+    color: white;
+}
+#download-md-img-btn{
+    background-color: #FEF7F7;
+    color: #4A1A1A;
+    border: 1px solid rgba(233, 30, 99, 0.2);
+}
+#download-md-btn:hover{
+    background-color: #ed3b72;
+}
+#download-md-img-btn:hover{
+    background-color: #f48fb1;
 }
 
 .download-btn:disabled {
     opacity: 0.7;
     cursor: not-allowed;
-}
-
-.back-btn {
-    width: 100%;
-    padding: 8px;
-    background-color: #6c757d;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 5px;
-}
-
-.back-btn:hover {
-    background-color: #5a6268;
 }
 
 .loading-dots {
