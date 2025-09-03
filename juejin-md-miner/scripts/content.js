@@ -175,6 +175,29 @@ function convertZhihuToMarkdown() {
   const title = element.querySelector('.Post-Header h1').textContent.replace(/^\s+|\s+$/g, '').replace(/^\n+|\n+$/g, '');
   const articleContent = element.querySelector('.Post-RichTextContainer #content .Post-RichText').innerHTML;
   
+  // 添加数学公式处理规则
+  turndownService.addRule('zhihuMath', {
+    filter: function (node) {
+      return node.nodeName === 'SPAN' && node.classList.contains('ztext-math');
+    },
+    replacement: function (content, node) {
+      const tex = node.getAttribute('data-tex');
+      if (tex) {
+        // 去除末尾的反斜杠，避免影响Markdown渲染
+        const cleanTex = tex.replace(/\\+$/, '');
+        // 判断是否为行内公式还是块级公式
+        // 知乎的行内公式通常较短，块级公式较长或包含特定符号
+        const isBlockMath = cleanTex.length > 50 || cleanTex.includes('\\\\') || cleanTex.includes('\\begin') || cleanTex.includes('\\end');
+        if (isBlockMath) {
+          return '\n\n$$\n' + cleanTex + '\n$$\n\n';
+        } else {
+          return '$' + cleanTex + '$';
+        }
+      }
+      return content;
+    }
+  });
+  
   const markdown = turndownService.turndown(articleContent)
   return { title, markdown };
 }
