@@ -105,8 +105,10 @@ async function downloadMarkdown(includeImages) {
     const buttonText = button.querySelector('.button-text');
     const originalText = buttonText.textContent;
     
-    button.disabled = true;
-    buttonText.textContent = '下载中';
+    let timer = setTimeout(()=>{
+        button.disabled = true;
+        buttonText.textContent = '下载中';
+    }, 200)
 
     try {
         const [tab] = await chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true });
@@ -119,11 +121,13 @@ async function downloadMarkdown(includeImages) {
         if (!response || !response.success) {
             alert(response?.error || '下载失败，请重试');
         } else if (response.message) {
-            alert(response.message);
+            // 下载成功就不alert弹窗了
+            // alert(response.message);
         }
     } catch (error) {
         alert(`下载失败: ${error.message}`);
     } finally {
+        clearTimeout(timer);
         button.disabled = false;
         buttonText.textContent = originalText;
     }
