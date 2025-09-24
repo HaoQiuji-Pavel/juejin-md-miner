@@ -104,10 +104,12 @@ async function downloadMarkdown(includeImages) {
         document.getElementById('download-md-btn');
     const buttonText = button.querySelector('.button-text');
     const originalText = buttonText.textContent;
+    const dots = button.querySelector('.loading-dots');
     
     let timer = setTimeout(()=>{
         button.disabled = true;
         buttonText.textContent = '下载中';
+        dots.style.display = 'inline-block';
     }, 200)
 
     try {
@@ -130,5 +132,6 @@ async function downloadMarkdown(includeImages) {
         clearTimeout(timer);
         button.disabled = false;
         buttonText.textContent = originalText;
+        dots.style.display = 'none';
     }
 }
