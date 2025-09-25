@@ -23,6 +23,7 @@
         "matches": [
             "https://juejin.cn/post/*", 
             "https://zhuanlan.zhihu.com/p/*",
+            "https://github.com/*/blob/*/*.md",
             "<all_urls>"
         ],
         "js": [

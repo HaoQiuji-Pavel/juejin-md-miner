@@ -5,8 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 监听自定义元素site-option的site-selected事件
     document.addEventListener('site-selected', async (e) => {
         currentSite = e.detail.site;
-        document.getElementById('site-selection').style.display = 'none';
-        document.getElementById('article-info').style.display = 'block';
         await loadArticleInfo(currentSite);
     });
 
@@ -53,18 +51,21 @@ async function loadArticleInfo(site) {
 
             siteNameElement.textContent = getSiteName(site);
             siteUrlElement.textContent = getSiteUrl(site);
+
+            document.getElementById('site-selection').style.display = 'none';
+            document.getElementById('article-info').style.display = 'block';
         } else {
-            titleElement.textContent = `未获取到${getSiteName(site)}文章信息`;
-            authorElement.textContent = '';
-            dateElement.textContent = '';
+            // titleElement.textContent = `未获取到${getSiteName(site)}文章信息`;
+            // authorElement.textContent = '';
+            // dateElement.textContent = '';
+            // document.getElementById('site-selection').style.display = 'block';
+            // document.getElementById('article-info').style.display = 'none';
             alert(`无法获取${getSiteName(site)}文章信息，请确保您正在浏览${getSiteName(site)}的文章页面。`);
-            document.getElementById('site-selection').style.display = 'block';
-            document.getElementById('article-info').style.display = 'none';
         }
     } catch (error) {    
+        // document.getElementById('site-selection').style.display = 'block';
+        // document.getElementById('article-info').style.display = 'none';
         alert(`无法连接到当前页面，请确保您正在浏览${getSiteName(site)}的文章页面。`);
-        document.getElementById('site-selection').style.display = 'block';
-        document.getElementById('article-info').style.display = 'none';
     }
 }
 
@@ -73,6 +74,7 @@ function getSiteName(site) {
     const siteNames = {
         'juejin': '稀土掘金',
         'zhihu': '知乎专栏',
+        'github': 'GitHub',
         'other': '其他网站'
     };
     return siteNames[site] || site;
@@ -82,6 +84,7 @@ function getSiteUrl(site) {
     const siteUrls = {
         'juejin': 'https://juejin.cn/post/',
         'zhihu': 'https://zhuanlan.zhihu.com/p/',
+        'github': 'https://github.com/*/blob/*/*.md',
         'other': 'balabalabala~'
     };
     return siteUrls[site] || site;
