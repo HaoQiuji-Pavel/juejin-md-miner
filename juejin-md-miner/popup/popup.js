@@ -5,6 +5,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // 监听自定义元素site-option的site-selected事件
     document.addEventListener('site-selected', async (e) => {
         currentSite = e.detail.site;
+        
+        // 在调用loadArticleInfo前进行URL匹配验证
+        const isUrlMatched = await checkUrlMatch(currentSite);
+        if (!isUrlMatched) {
+            alert(`当前页面URL与所选网站不匹配。请确保您正在浏览${getSiteName(currentSite)}的文章页面。`);
+            return;
+        }
+        
         await loadArticleInfo(currentSite);
     });
 
@@ -24,6 +32,27 @@ document.addEventListener('DOMContentLoaded', () => {
         await downloadMarkdown(true);
     });
 });
+
+// 检查当前页面URL是否与选择的网站匹配
+async function checkUrlMatch(site) {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true });
+    const currentUrl = tab.url;
+    
+    // 定义各网站的URL匹配模式（基于manifest.json中的配置）
+    const urlPatterns = {
+        'juejin': /^https:\/\/juejin\.cn\/post\/.+/,
+        'zhihu': /^https:\/\/zhuanlan\.zhihu\.com\/p\/.+/,
+        'github': /^https:\/\/github\.com\/[^\/]+\/[^\/]+\/blob\/.*\.md(\?.*|#.*)?$/,
+        'other': /.*/  // other网站匹配所有URL
+    };
+    
+    const pattern = urlPatterns[site];
+    if (!pattern) {
+        return false;
+    }
+    
+    return pattern.test(currentUrl);
+}
 
 // 加载文章信息
 async function loadArticleInfo(site) {
