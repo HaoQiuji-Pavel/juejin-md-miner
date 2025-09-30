@@ -6,8 +6,8 @@ function getJuejinArticleInfo() {
   }
   
   const title = articleInfo.querySelector('.article-title')?.textContent;
-  const author = articleInfo.querySelector('.author-info-block .author-name span')?.textContent;
-  const date = articleInfo.querySelector('.author-info-block .meta-box time')?.textContent;
+  const author = articleInfo.querySelector('.author-info-block .author-name span')?.textContent || articleInfo.querySelector('.team-user .username span')?.textContent;
+  const date = articleInfo.querySelector('.author-info-block .meta-box time')?.textContent || articleInfo.querySelector('.team-follow .meta-box time')?.textContent;
   
   if (!title || !author || !date) {
     throw new Error('未找到完整的掘金文章信息');
