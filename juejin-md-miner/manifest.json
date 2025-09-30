@@ -27,9 +27,13 @@
             "<all_urls>"
         ],
         "js": [
+            "scripts/jszip.js",
             "scripts/turndown.js",
-            "scripts/content.js",
-            "scripts/jszip.js"
+            "scripts/sites/juejin.js",
+            "scripts/sites/zhihu.js",
+            "scripts/sites/github.js",
+            "scripts/sites/other.js",
+            "scripts/content.js"
         ]
     }]
 }
