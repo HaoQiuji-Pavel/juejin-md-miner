@@ -108,8 +108,8 @@ function getImageExtension(url) {
   const match = cleanUrl.match(/\.([a-zA-Z0-9]+)$/i);
   let extension = match ? match[1].toLowerCase() : 'jpg';
   
-  // 特殊处理掘金的awebp扩展名
-  if (extension === 'awebp') {
+  // 特殊处理一些扩展名
+  if (extension === 'awebp' || extension === 'image') {
     extension = 'webp';
   }
   

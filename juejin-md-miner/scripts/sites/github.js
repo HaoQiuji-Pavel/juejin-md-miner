@@ -60,7 +60,7 @@ function convertGithubToMarkdown() {
   } else{
     markdown = turndownService.turndown(element.innerHTML);
     // 将 camo 链接解码为原始 URL
-    const imgRegex = /!\[([^\]]*)\]\((https:\/\/camo\.githubusercontent\.com\/[^)]+)\)/g;
+    const imgRegex = /\[!\[([^\]]*)\]\((https:\/\/camo\.githubusercontent\.com\/[^)]+)\)\]\(https:\/\/camo\.githubusercontent\.com\/[^)]+\)/g;
     markdown = markdown.replace(imgRegex, (match, alt, camoUrl) => {
       try {
         const u = new URL(camoUrl);
